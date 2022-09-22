@@ -11,9 +11,22 @@
 
 /*Ajouts*/
 .errorMsg {
-  font-size: 15px;
-  color: #ff0000;
+  font-size: 14px;
+  color: #ff4e60;
+  font-weight: 200;
 }
+
+.fa-bars {
+  color: #ff001b;
+  display: flex;
+}
+
+@media screen and (max-width: 425px) {
+  .hero-headline {
+    font-size: 3rem;
+  }
+}
+
 /* Landing Page */
 
 body {
