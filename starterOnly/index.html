@@ -51,7 +51,7 @@
         </button>
       </div>
 
-      <div class="bground">
+      <div class="bground" id="hi">
         <div class="content">
           <span class="close"></span>
           <div class="modal-body">
@@ -110,6 +110,7 @@
                   
                 /><br>
               </div>
+              <span class="errorMsg" id="errorBirthdate"></span>
               <div
                 class="formData">
                 <label for="Quantity">À combien de tournois GameOn avez-vous déjà participé ?</label><br>
@@ -187,7 +188,7 @@
                   Portland</label
                 >
               </div>
-
+              <span class="errorMsg" id="errorRadio"></span>
               <div
                 class="formData">
                 <input
@@ -195,9 +196,9 @@
                   type="checkbox"
                   id="checkbox1"
                   checked
-                  required
+                  
                 />
-                <label class="checkbox2-label" for="checkbox1" required>
+                <label class="checkbox2-label" for="checkbox1" >
                   <span class="checkbox-icon"></span>
                   J'ai lu et accepté les conditions d'utilisation.
                 </label>

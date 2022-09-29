@@ -7,7 +7,7 @@ const birthdate = document.getElementById("birthdate");
 const errorFirstName = document.getElementById("errorFirstName");
 const errorLastName = document.getElementById("errorLastName");
 const errorQuantity = document.getElementById("errorQuantity");
-const btnRadio = document.querySelectorAll("input[type='radio']:checked");
+const errorRadio = document.getElementById("errorRadio");
 const form = document.querySelector("form");
 const checkbox1 = document.getElementById("checkbox1");
 const btnSubmit = document.getElementById("submit-button");
@@ -16,22 +16,47 @@ const btnSubmit = document.getElementById("submit-button");
 const regExpNames = /^[a-zA-Z]{2,}$/;
 const regExpEmail = /^[\w-_\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 const regExpQuantity = /^[0-9]{0,99}$/;
-const regExpBirthdate = /^[a-zA-Z]{2,}$/;
 
 //LISTENERS
-firstName.addEventListener("change", checkFirstName);
+firstName.addEventListener("change", () => checkFirstName(firstName));
 lastName.addEventListener("change", checkLastName);
 email.addEventListener("change", checkEmail);
 birthdate.addEventListener("change", checkBirthdate);
 quantity.addEventListener("change", checkQuantity);
-form.addEventListener("submit", isRadioValid);
+//form.addEventListener("submit", isRadioValid);
 // checkbox1.addEventListener("click", checkbox1True);
 form.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const btnRadio = document.querySelector("input[name='location']:checked");
+  const firstName = document.getElementById("first");
+  const lastName = document.getElementById("last");
+  const email = document.getElementById("email");
+  const quantity = document.getElementById("quantity");
+  const birthdate = document.getElementById("birthdate");
+
+  if (
+    !isRadioValid(btnRadio) ||
+    !checkFirstName(firstName) ||
+    !checkLastName(lastName) ||
+    !checkEmail(email) ||
+    !checkQuantity(quantity) ||
+    !checkBirthdate(birthdate)
+  ) {
+    alert("pas bon");
+    return;
+  }
+
   if (checkbox1.checked == false) {
     alert("Veuillez accepter les conditions d'utilisation.");
-    e.preventDefault();
+    return;
   }
-  alert("Merci ! Votre réservation a été reçue.");
+  let modal = document.getElementById("hi");
+  let closeModal = document.createElement("div");
+  modal.remove();
+  document.body.appendChild(closeModal);
+  closeModal.setAttribute("class", "content");
+  closeModal.innerHTML = "Merci <br/> Votre réservation a bien été reçue.";
 });
 
 //FORM FIELDS VALIDATION
@@ -42,7 +67,7 @@ function checkFirstName() {
     errorFirstName.innerHTML = "Veuillez entrer 2 caractères ou plus";
     return false;
   }
-
+  errorFirstName.innerHTML = "";
   firstName.style.border = "2px solid #00FF00";
   return true;
 }
@@ -53,7 +78,7 @@ function checkLastName() {
     errorLastName.innerHTML = "Veuillez entrer 2 caractères ou plus";
     return false;
   }
-
+  errorLastName.innerHTML = "";
   lastName.style.border = "2px solid #00FF00";
   return true;
 }
@@ -64,7 +89,7 @@ function checkEmail() {
     errorEmail.innerHTML = "Veuillez entrer une adresse email valide";
     return false;
   }
-
+  errorEmail.innerHTML = "";
   email.style.border = "2px solid #00FF00";
   return true;
 }
@@ -74,27 +99,48 @@ function checkQuantity() {
   if (!quantity.value.match(regExpQuantity) || quantity.value.trim() === "") {
     quantity.style.border = "2px solid #FF4E60";
     errorQuantity.innerHTML =
-      "Veuillez choisir une quantité valide (entre 0 et 100)";
+      "Veuillez choisir une quantité valide (supérieure ou égale à 0)";
     return false;
   }
+  errorQuantity.innerHTML = "";
   quantity.style.border = "2px solid #00FF00";
   return true;
 }
 
 //Birthdate
 function checkBirthdate() {
-  if (!birthdate.value.match(regExpBirthdate)) {
+  const date = new Date(birthdate.value);
+  const actualDate = new Date();
+  const dateDifference = actualDate.getTime() - date.getTime();
+  const yearOfBirth = date.getFullYear();
+
+  if (date > actualDate || yearOfBirth < 1904) {
+    errorBirthdate.innerHTML = "Veuillez choisir une date valide";
     birthdate.style.border = "2px solid #FF4E60";
+    return false;
   }
-  birthdate.style.border = "2px solid #00FF00";
+
+  // 18 ans en millisecondes équivaut à 567648000000
+
+  if (dateDifference < 567648000000) {
+    errorBirthdate.innerHTML =
+      "Vous devez être majeur pour participer aux tournois";
+    birthdate.style.border = "2px solid #FF4E60";
+    return false;
+  }
+  if (dateDifference > 567648000000) {
+    birthdate.style.border = "2px solid #00FF00";
+    errorBirthdate.innerHTML = "";
+    return true;
+  }
 }
 
 //Radio
-function isRadioValid() {
-  if (!btnRadio) {
-    console.log("pas ok");
+function isRadioValid(value) {
+  if (!value) {
+    errorRadio.innerHTML = "Veuillez sélectionner une ville";
     return false;
   }
-  console.log("ok");
+  errorRadio.innerHTML = "";
   return true;
 }
