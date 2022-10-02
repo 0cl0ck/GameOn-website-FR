@@ -34,7 +34,7 @@ form.addEventListener("submit", (e) => {
   const email = document.getElementById("email");
   const quantity = document.getElementById("quantity");
   const birthdate = document.getElementById("birthdate");
-
+  const bground = document.querySelector(".bground");
   if (
     !isRadioValid(btnRadio) ||
     !checkFirstName(firstName) ||
@@ -43,7 +43,6 @@ form.addEventListener("submit", (e) => {
     !checkQuantity(quantity) ||
     !checkBirthdate(birthdate)
   ) {
-    alert("pas bon");
     return;
   }
 
@@ -51,12 +50,13 @@ form.addEventListener("submit", (e) => {
     alert("Veuillez accepter les conditions d'utilisation.");
     return;
   }
-  let modal = document.getElementById("hi");
+  let modal = document.querySelector(".content");
   let closeModal = document.createElement("div");
   modal.remove();
-  document.body.appendChild(closeModal);
+  bground.appendChild(closeModal);
   closeModal.setAttribute("class", "content");
-  closeModal.innerHTML = "Merci <br/> Votre réservation a bien été reçue.";
+  closeModal.innerHTML =
+    " <span class='close'></span> Merci <br/> Votre réservation a bien été reçue. <input class='btn-submit' type='submit' value='Fermer'>";
 });
 
 //FORM FIELDS VALIDATION
@@ -113,6 +113,7 @@ function checkBirthdate() {
   const actualDate = new Date();
   const dateDifference = actualDate.getTime() - date.getTime();
   const yearOfBirth = date.getFullYear();
+  const eighteenYearsMs = 567648000000;
 
   if (date > actualDate || yearOfBirth < 1904) {
     errorBirthdate.innerHTML = "Veuillez choisir une date valide";
@@ -122,13 +123,13 @@ function checkBirthdate() {
 
   // 18 ans en millisecondes équivaut à 567648000000
 
-  if (dateDifference < 567648000000) {
+  if (dateDifference < eighteenYearsMs) {
     errorBirthdate.innerHTML =
       "Vous devez être majeur pour participer aux tournois";
     birthdate.style.border = "2px solid #FF4E60";
     return false;
   }
-  if (dateDifference > 567648000000) {
+  if (dateDifference > eighteenYearsMs) {
     birthdate.style.border = "2px solid #00FF00";
     errorBirthdate.innerHTML = "";
     return true;
