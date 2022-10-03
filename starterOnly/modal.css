@@ -10,6 +10,26 @@
 }
 
 /*Ajouts*/
+.modalp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+}
+#btn-close {
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  background: #fe142f;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  border-radius: 7px;
+  font-size: 1rem;
+  padding: 12px 82px;
+  color: #fff;
+  cursor: pointer;
+  border: 0;
+}
 .errorMsg {
   font-size: 14px;
   color: #ff4e60;
@@ -20,6 +40,9 @@
   color: #ff001b;
 }
 
+.thankyou {
+  display: none;
+}
 /* Landing Page */
 
 body {
