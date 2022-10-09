@@ -23,8 +23,8 @@ lastName.addEventListener("change", checkLastName);
 email.addEventListener("change", checkEmail);
 birthdate.addEventListener("change", checkBirthdate);
 quantity.addEventListener("change", checkQuantity);
-//form.addEventListener("submit", isRadioValid);
-// checkbox1.addEventListener("click", checkbox1True);
+
+//Validation au Submit
 form.addEventListener("submit", (e) => {
   e.preventDefault();
 
@@ -35,6 +35,7 @@ form.addEventListener("submit", (e) => {
   const quantity = document.getElementById("quantity");
   const birthdate = document.getElementById("birthdate");
   const bground = document.querySelector(".bground");
+  //On empêche la validation du formulaire si l'une des entrées n'est pas bonne
   if (
     !isRadioValid(btnRadio) ||
     !checkFirstName(firstName) ||
@@ -45,55 +46,42 @@ form.addEventListener("submit", (e) => {
   ) {
     return;
   }
-
+  //On empêche la validation du formulaire si la case des conditions d'utilisation n'est pas cochée
   if (checkbox1.checked == false) {
     alert("Veuillez accepter les conditions d'utilisation.");
     return;
   }
+
+  //Création de la modal de remerciement
+  //DOM Elements
   let modal = document.querySelector(".content");
-  // let closeModal = document.createElement("div");
-  let thankYouModal = document.querySelector(".thankyou");
   let modalClose = document.createElement("div");
-  let modalCloseClose = document.createElement("span");
   let close = document.querySelector(".close");
   let btnClose = document.createElement("button");
   let p = document.createElement("p");
+  //On attribue les classes à la modal, on crée également les éléments qui la compose
   p.setAttribute("class", "content  modalp");
-  p.innerText = "Hello there";
+  p.innerHTML = "Merci ! </br> Votre réservation a bien été reçue.";
   modalClose.setAttribute("class", "content  modalP");
   btnClose.setAttribute("class", "content");
   btnClose.setAttribute("id", "btn-close");
-
   btnClose.innerText = "Fermer";
-  // btnClose.value = "Fermer";
-
+  //On supprime le formulaire
   modal.remove();
-
+  //On fait apparaître la modal de remerciement
   bground.appendChild(modalClose);
-  // modalClose.innerHTML = "<p>Merci</p>";
   modalClose.appendChild(p);
   modalClose.appendChild(close);
   modalClose.appendChild(btnClose);
 
-  const closeModalBtnVindieu = document.getElementById("btn-close");
-
-  closeModalBtnVindieu.addEventListener("click", closeM);
   //Close confirmation
+  const closeModalBtnVindieu = document.getElementById("btn-close");
+  closeModalBtnVindieu.addEventListener("click", closeM);
+
   function closeM() {
-    console.log("Hello there");
     modal.remove();
     window.location.reload();
   }
-  // modalClose.innerHTML =
-  //   "<span class='close'></span> Merci <br/> Votre réservation a bien été reçue. <input class='btn-submit' type='submit' value='Fermer'>";
-  // bground.appendChild(ThankYouModal);
-  // bground.appendChild(thankYouModal);
-  // thankYouModal.style.display = "block";
-  // thankYouModal.setAttribute("class", "content modal-body");
-
-  // thankYouModal.setAttribute("class", "content modal-body");
-  // thankYouModal.innerHTML =
-  //   " <span class='close'></span> Merci <br/> Votre réservation a bien été reçue. <input class='btn-submit' type='submit' value='Fermer'>";
 });
 
 //FORM FIELDS VALIDATION
