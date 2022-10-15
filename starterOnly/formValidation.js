@@ -87,7 +87,7 @@ form.addEventListener("submit", (e) => {
 //FORM FIELDS VALIDATION
 //First Name
 function checkFirstName() {
-  if (!firstName.value.match(regExpNames) || first.value.trim() === "") {
+  if (!firstName.value.match(regExpNames) || firstName.value.trim() === "") {
     firstName.style.border = "2px solid #FF4E60";
     errorFirstName.innerHTML = "Veuillez entrer 2 caractères ou plus";
     return false;
@@ -98,7 +98,7 @@ function checkFirstName() {
 }
 //Last name
 function checkLastName() {
-  if (!lastName.value.match(regExpNames) || last.value.trim() === "") {
+  if (!lastName.value.match(regExpNames) || lastName.value.trim() === "") {
     lastName.style.border = "2px solid #FF4E60";
     errorLastName.innerHTML = "Veuillez entrer 2 caractères ou plus";
     return false;
